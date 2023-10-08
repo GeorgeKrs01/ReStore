@@ -1,11 +1,9 @@
-import { Typography } from "@mui/material"
+import { Typography } from "@mui/material";
 
-function AboutPage() {
+export default function AboutPage() {
     return (
         <Typography variant="h2">
-            About page
+            About Page
         </Typography>
     )
 }
-
-export default AboutPage;

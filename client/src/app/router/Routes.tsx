@@ -1,10 +1,10 @@
-import { createBrowserRouter } from "react-router-dom"
-import ProductDetails from "../features/catalog/ProductDetails"
-import App from "../layout/App"
-import HomePage from "../features/home/HomePage"
-import Catalog from "../features/catalog/Catalog"
-import AboutPage from "../features/about/AboutPage"
-import ContactPage from "../features/contact/ContactPage"
+import { createBrowserRouter } from "react-router-dom";
+import Catalog from "../features/catalog/Catalog";
+import ProductDetails from "../features/catalog/ProductDetails";
+import HomePage from "../features/home/HomePage";
+import App from "../layout/App";
+import AboutPage from "../features/about/AboutPage";
+import ContactPage from "../features/contact/ContactPage";
 
 
 export const router = createBrowserRouter([
@@ -19,4 +19,4 @@ export const router = createBrowserRouter([
             { path: 'contact', element: <ContactPage /> },
         ]
     }
-])
+]);
