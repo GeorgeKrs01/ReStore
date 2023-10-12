@@ -3,38 +3,44 @@ import { toast } from "react-toastify";
 import { router } from "../router/Routes";
 
 
-const sleep = () => new Promise(resolve => setTimeout(resolve, 0.2));
+const sleep = () => new Promise(resolve => setTimeout(resolve, 500));
 
 axios.defaults.baseURL = 'http://localhost:5131/api/';
+axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
-axios.interceptors.response.use(async response => {
+axios.interceptors.response.use(async (response) => {
     await sleep();
-    return response
+    return response;
 }, (error: AxiosError) => {
-    const { data, status } = error.response as AxiosResponse;
-    switch (status) {
-        case 400:
-            if (data.errors) {
-                const modelStateErrors: string[] = [];
-                for (const key in data.errors) {
-                    if (data.errors[key]) {
-                        modelStateErrors.push(data.errors[key])
+    if (error.response) {
+        const { data, status } = error.response as AxiosResponse;
+        switch (status) {
+            case 400:
+                if (data.errors) {
+                    const modelStateErrors: string[] = [];
+                    for (const key in data.errors) {
+                        if (data.errors[key]) {
+                            modelStateErrors.push(data.errors[key])
+                        }
                     }
+                    throw modelStateErrors.flat();
                 }
-                throw modelStateErrors.flat();
-            }
-            toast.error(data.title);
-            break;
-        case 401:
-            toast.error(data.title);
-            break;
-        case 500:
-            router.navigate('/server-error', { state: { error: data } });
-            break;
-        default:
-            break;
+                toast.error(data.title);
+                break;
+            case 401:
+                toast.error(data.title);
+                break;
+            // case 403:
+            //     toast.error('You are not allowed to do that!');
+            //     break;
+            case 500:
+                router.navigate('/server-error', { state: { error: data } });
+                break;
+            default:
+                break;
+        }
     }
     return Promise.reject(error.response);
 })
@@ -59,9 +65,16 @@ const TestErrors = {
     getValidationError: () => requests.get('buggy/validation-error')
 }
 
+const Basket = {
+    get: () => requests.get('basket'),
+    addItem: (productId: number, quantity = 1) => requests.post(`basket?productId=${productId}&quantity${quantity}`, {}),
+    removeItem: (productId: number, quantity = 1) => requests.delete(`basket?productId=${productId}&quantity${quantity}`)
+}
+
 const agent = {
     Catalog,
-    TestErrors
+    TestErrors,
+    Basket
 }
 
 export default agent;
