@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
-import { Basket } from "../../models/basket";
-import agent from "../../api/agent";
-import LoadingComponent from "../../layout/LoadingComponent";
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
+import { useStoreContext } from "../../context/StoreContext";
+import { useState, useEffect } from 'react'
+import { Basket } from "../../models/basket";
+import LoadingComponent from "../../layout/LoadingComponent";
+import agent from "../../api/agent";
 
 export default function BasketPage() {
     const [loading, setLoading] = useState(true);
@@ -13,12 +14,12 @@ export default function BasketPage() {
         agent.Basket.get()
             .then(basket => setBasket(basket))
             .catch(error => console.log(error))
-            .finally(() => setLoading(false))
+            .finally(() => setLoading(false));
     }, [])
 
-    if (loading) return <LoadingComponent message="Loading Baket..." />
+    if (loading) return <LoadingComponent message="Loading basket..." />
 
-    if (!basket) return <Typography variant='h3'>Your basket is empty</Typography>
+    if (!basket) return <Typography variant="h3"> Your basket is empty</Typography>
 
     return (
         <TableContainer component={Paper}>

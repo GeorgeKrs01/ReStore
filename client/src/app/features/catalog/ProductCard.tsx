@@ -49,9 +49,7 @@ function ProductCard({ product }: Props) {
                 <LoadingButton
                     loading={loading}
                     onClick={() => handleAddItem(product.id)}
-                    size="small">
-                    Add to Cart
-                </LoadingButton>
+                    size="small">Add to Cart</LoadingButton>
                 <Button component={Link} to={`/catalog/${product.id}`} size="small">View</Button>
             </CardActions>
         </Card>

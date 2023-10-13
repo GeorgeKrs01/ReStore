@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
 using API.Entities;
@@ -18,7 +14,6 @@ namespace API.Controllers
         public BasketController(StoreContext context)
         {
             _context = context;
-
         }
 
         [HttpGet(Name = "GetBasket")]
@@ -69,8 +64,6 @@ namespace API.Controllers
             if (result) return Ok();
 
             return BadRequest(new ProblemDetails { Title = "Problem removing item from the basket" });
-
-
         }
 
         private string GetBuyerId()
