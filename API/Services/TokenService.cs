@@ -13,9 +13,10 @@ namespace API.Services
             _config = config;
         }
 
-        public async Task<string> GenerateToken(User user)
-        {
+        // public async Task<string> GenerateToken(User user)
+        // {
 
-        }
+        // }
     }
 }
+
